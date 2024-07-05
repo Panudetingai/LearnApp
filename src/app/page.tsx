@@ -9,6 +9,7 @@ import { link } from "fs";
 import { Button } from "@/components/ui/button";
 import BoxReveal from "@/components/magicui/box-reveal";
 import SparklesText from "@/components/magicui/sparkles-text";
+import GradualSpacing from "@/components/magicui/gradual-spacing";
 
 type VideoType = {
   title: string;
@@ -66,7 +67,7 @@ export default function Home() {
           <IconCloud iconSlugs={icon} />
         </div>
         <div className="Label-Title flex flex-col gap-2">
-          <h1 className="text-4xl max-sm:text-3xl font-bold">Welcome to Learn language programs</h1>
+          <GradualSpacing className="text-4xl max-sm:text-3xl font-bold" text="Learn language programs" />
           <p className="text-base w-3/4 max-sm:w-auto">This is a Pokemon app where you can explore and learn about different Pokemon creatures. Catch them all and become a Pokemon master!</p>
         </div>
       </section>
@@ -114,11 +115,11 @@ export default function Home() {
             </BoxReveal>
 
             <BoxReveal boxColor={"#3bfa4b"} duration={0.5}>
-              <Button className="mt-[1.6rem] bg-[#3bfa4b]">
-                <Link href={'https://emerline.com/blog/top-10-best-web-development-frameworks-and-libraries'} target="_blank">
+              <Link href={'https://emerline.com/blog/top-10-best-web-development-frameworks-and-libraries'} target="_blank">
+                <Button className="mt-[1.6rem] bg-[#3bfa4b]">
                   Explore
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </BoxReveal>
           </div>
           <div className="rounded-full drop-shadow-md overflow-hidden w-[32rem] h-[18rem] max-sm:hidden">
@@ -134,14 +135,14 @@ export default function Home() {
         <div className="grid grid-cols-4 items-center justify-items-center gap-3 max-sm:grid-cols-1 mt-5">
           {Video.map((video: VideoType, index: number) => (
             <figure key={index} className={cn(
-              "cursor-pointer w-72 overflow-hidden rounded-xl border",
+              "cursor-pointer w-72 h-[315px] overflow-hidden rounded-xl border",
               // light styles
               "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
               // dark styles
               "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
             )}>
               <div className="flex flex-row items-center gap-2">
-                <iframe width="560" height={315} src={video.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <iframe width="560" height="315px" src={video.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
               </div>
             </figure>
           ))}

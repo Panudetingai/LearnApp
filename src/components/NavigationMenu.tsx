@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import Link from 'next/link'
+import { Button } from './ui/button'
 
 type Props = {}
 
@@ -19,26 +20,36 @@ const NavigationMenus = (props: Props) => {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <Link href={''} passHref legacyBehavior>
+                    <Link href={'/'} passHref legacyBehavior>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Home
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
-                {/* <NavigationMenuItem>
-                    <Link href={''} passHref legacyBehavior>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            List
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href={''} passHref legacyBehavior>
+                    <Link href={'/About'} passHref legacyBehavior>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             About
                         </NavigationMenuLink>
                     </Link>
-                </NavigationMenuItem> */}
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link href={'/Service'} passHref legacyBehavior>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Service
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Button>
+                        Sign-up
+                    </Button>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Button variant="outline">
+                        Sign-in
+                    </Button>
+                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
     )
