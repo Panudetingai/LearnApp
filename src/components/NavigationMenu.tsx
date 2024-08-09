@@ -42,7 +42,7 @@ const NavigationMenus = (props: Props) => {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <Button>
-                        Sign-up
+                        <Link href={'/signup'} passHref legacyBehavior>Sign-up</Link>
                     </Button>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
