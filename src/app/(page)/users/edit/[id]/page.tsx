@@ -20,12 +20,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import React from "react"
 import { UserType } from "@/app/types/user"
 
-
 type Input = z.infer<typeof user>;
 
-const page = ({params} : {params: {id: string}}) => {
+const Page = ({ params }: { params: { id: string } }) => {
 
-    const [userdata, setuserdata] = React.useState([]);
+    const [userdata, setuserdata] = React.useState<UserType[]>([]);
 
     React.useEffect(() => {
         const fetchUserold = async () => {
@@ -55,7 +54,7 @@ const page = ({params} : {params: {id: string}}) => {
     const form = useForm<Input>({
         resolver: zodResolver(user),
         defaultValues: {
-            // firstname: userarray.,
+            // firstname: userarray.?,
             // lastname: userdata.lastname,
             // username: userdata.username,
             // password: userdata.password
@@ -150,4 +149,4 @@ const page = ({params} : {params: {id: string}}) => {
     )
 }
 
-export default page;
+export default Page;
