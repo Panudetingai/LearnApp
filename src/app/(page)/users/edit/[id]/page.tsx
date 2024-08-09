@@ -23,7 +23,7 @@ import { UserType } from "@/app/types/user"
 
 type Input = z.infer<typeof user>;
 
-export default function page({params} : {params: {id: string}}) {
+const page = ({params} : {params: {id: string}}) => {
 
     const [userdata, setuserdata] = React.useState([]);
 
@@ -149,3 +149,5 @@ export default function page({params} : {params: {id: string}}) {
         </Card>
     )
 }
+
+export default page;
