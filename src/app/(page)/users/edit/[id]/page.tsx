@@ -44,7 +44,7 @@ export default function page({params} : {params: {id: string}}) {
         }
     
         fetchUserold()
-    }, [])
+    }, [params.id])
 
     const userarray = userdata.map((item: UserType) => {
         return item
