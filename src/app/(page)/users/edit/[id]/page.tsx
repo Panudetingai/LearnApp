@@ -19,12 +19,26 @@ import { user } from "@/lib/schema/user"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import React from "react"
 import { UserType } from "@/app/types/user"
+import { useRouter } from "next/navigation"
 
 type Input = z.infer<typeof user>;
 
 const Page = ({ params }: { params: { id: string } }) => {
 
     const [userdata, setuserdata] = React.useState<UserType[]>([]);
+    const [users, setusers] = React.useState<UserType[]>([]);
+
+    const router = useRouter();
+
+    const form = useForm<Input>({
+        resolver: zodResolver(user),
+        defaultValues: {
+            firstname: userdata[0]?.firstname,
+            lastname: userdata[0]?.lastname,
+            username: userdata[0]?.username,
+            password: userdata[0]?.password
+        },
+    })
 
     React.useEffect(() => {
         const fetchUserold = async () => {
@@ -35,7 +49,13 @@ const Page = ({ params }: { params: { id: string } }) => {
                         "Content-Type": "application/json",
                     }
                 });
-                const userdata = await res.json();
+                const userdata = await res.json();  
+
+                form.setValue('firstname', userdata[0]?.firstname);
+                form.setValue('lastname', userdata[0]?.lastname);
+                form.setValue('username', userdata[0]?.username);
+                form.setValue('password', userdata[0]?.password);
+
                 setuserdata(userdata);
             } catch (error) {
                 console.error(error);
@@ -43,27 +63,12 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
     
         fetchUserold()
-    }, [params.id])
+    }, []);
 
-    const userarray = userdata.map((item: UserType) => {
-        return item
-    })
-
-    console.log(userarray)
-
-    const form = useForm<Input>({
-        resolver: zodResolver(user),
-        defaultValues: {
-            // firstname: userarray.?,
-            // lastname: userdata.lastname,
-            // username: userdata.username,
-            // password: userdata.password
-        },
-    })
 
     async function onSubmit(data: Input) {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${params.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -74,16 +79,26 @@ const Page = ({ params }: { params: { id: string } }) => {
                     username: data.username,
                     password: data.password
                 }),
-            })
+            });
+
+            if(res.status === 200){
+                alert("User updated successfully");
+                router.push('/users')
+
+            }else{
+                alert("User not found")
+            }
         } catch (error) {
             console.error(error);
         }
     }
 
+
+
     return (
         <Card className="w-[450px]">
             <CardHeader>
-                <CardTitle>Sign-in</CardTitle>
+                <CardTitle>{params.id ? ('Edit Users') : ('Sign-in')}</CardTitle>
                 <CardDescription>ล็อกอินเพื่อเข้าสู่ระบบ</CardDescription>
             </CardHeader>
             <CardContent>
@@ -109,7 +124,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                                 <FormItem>
                                     <FormLabel>Lastname</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Lastname" {...field} />
+                                        <Input placeholder="Lastname"  {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -122,7 +137,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                                 <FormItem>
                                     <FormLabel>Username</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="username" {...field} />
+                                        <Input placeholder="username"  {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

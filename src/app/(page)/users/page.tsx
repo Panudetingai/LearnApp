@@ -12,12 +12,14 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 
 export default function TableDemo() {
 
     const [user, setuser] = React.useState([]);
+    const router = useRouter();
 
     React.useEffect(() => {
         try {
@@ -36,7 +38,28 @@ export default function TableDemo() {
         } catch (error) {
             console.error(error);
         }
-    }, []);
+    }, [user, setuser]);
+
+    const handsubmit = (id: number) => {
+        try {
+            const deleteuser = async () => {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+    
+                if (res.status === 200) {
+                    router.refresh();
+                }
+            }
+
+            deleteuser();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <Table className="container">
@@ -62,7 +85,7 @@ export default function TableDemo() {
                             </Link>
                         </TableCell>
                         <TableCell>
-                            <Button variant={"destructive"}>Delete</Button>
+                            <Button variant={"destructive"} onClick={() => handsubmit(user.id)}>Delete</Button>
                         </TableCell>
                     </TableRow>
                 ))}

@@ -17,11 +17,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { user } from "@/lib/schema/user"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
 
 
 type Input = z.infer<typeof user>;
 
 export default function ProfileForm() {
+
+    const router = useRouter();
 
     const form = useForm<Input>({
         resolver: zodResolver(user),
@@ -43,7 +46,11 @@ export default function ProfileForm() {
                     username: data.username,
                     password: data.password
                 }),
-            })
+            });
+
+            if(res.status === 200) {
+                router.push('/users');
+            }
         } catch (error) {
             console.error(error);
         }
@@ -53,7 +60,7 @@ export default function ProfileForm() {
         <Card className="w-[450px]">
             <CardHeader>
                 <CardTitle>Sign-in</CardTitle>
-                <CardDescription>ล็อกอินเพื่อเข้าสู่ระบบ</CardDescription>
+                <CardDescription>ล็อกอินเพื่อสมัครบัญชี</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
