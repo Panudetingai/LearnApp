@@ -15,19 +15,22 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { user } from "@/lib/schema/user"
+import { signin } from "@/lib/schema/user"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
+import { loadStaticPaths } from "next/dist/server/dev/static-paths-worker"
+import { useState } from "react"
 
 
-type Input = z.infer<typeof user>;
+type Input = z.infer<typeof signin>;
 
-export default function ProfileForm() {
+export default function FormSignin() {
 
     const router = useRouter();
+    const [Token, setToken] = useState('');
 
     const form = useForm<Input>({
-        resolver: zodResolver(user),
+        resolver: zodResolver(signin),
         defaultValues: {
 
         },
@@ -35,31 +38,35 @@ export default function ProfileForm() {
 
     async function onSubmit(data: Input) {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    firstname: data.firstname,
-                    lastname: data.lastname,
                     username: data.username,
                     password: data.password
                 }),
             });
 
-            if(res.status === 200) {
-                router.push('/users');
-            }
+            const result = await res.json();
+            setToken(result.token);
+            console.log("res successfully!!")
         } catch (error) {
             console.error(error);
         }
     }
 
+    if(Token){
+        localStorage.setItem('token', Token);
+        window.location.href = '/';
+    }
+
+
     return (
         <Card className="w-[450px]">
             <CardHeader>
-                <CardTitle>Sign-up</CardTitle>
+                <CardTitle>Sign-in</CardTitle>
                 <CardDescription>ล็อกอินเพื่อสมัครบัญชี</CardDescription>
             </CardHeader>
             <CardContent>
@@ -67,38 +74,12 @@ export default function ProfileForm() {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
                             control={form.control}
-                            name="firstname"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Firstname</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Firstname" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="lastname"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Lastname</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Lastname" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Username</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="username" {...field} />
+                                        <Input placeholder="Username" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -111,13 +92,13 @@ export default function ProfileForm() {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input type="password" placeholder="Password" {...field} />
+                                        <Input placeholder="Password" type="password" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Sign-up</Button>
+                        <Button type="submit">Sign-in</Button>
                     </form>
                 </Form>
             </CardContent>

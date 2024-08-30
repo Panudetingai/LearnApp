@@ -12,6 +12,7 @@ import {
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import Link from 'next/link'
 import { Button } from './ui/button'
+import Buttonsigninsignup from './Buttonsignin-signup'
 
 type Props = {}
 
@@ -40,16 +41,7 @@ const NavigationMenus = (props: Props) => {
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Button>
-                        <Link href={'/signup'} passHref legacyBehavior>Sign-up</Link>
-                    </Button>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Button variant="outline">
-                        Sign-in
-                    </Button>
-                </NavigationMenuItem>
+                <Buttonsigninsignup />
             </NavigationMenuList>
         </NavigationMenu>
     )

@@ -38,7 +38,7 @@ export default function TableDemo() {
         } catch (error) {
             console.error(error);
         }
-    }, [user, setuser]);
+    }, []);
 
     const handsubmit = (id: number) => {
         try {
