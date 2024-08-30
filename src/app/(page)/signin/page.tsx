@@ -58,7 +58,7 @@ export default function FormSignin() {
     }
 
     if(Token){
-        localStorage.setItem('token', Token);
+        window.localStorage.setItem('token', Token);
         window.location.href = '/';
     }
 

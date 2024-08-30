@@ -17,7 +17,7 @@ export default function Buttonsigninsignup() {
     }, [])
 
     const removeTokenLocalStorage = () => {
-        localStorage.removeItem('token');
+        window.localStorage.removeItem('token');
         window.location.href = "/signin";
     }
 
