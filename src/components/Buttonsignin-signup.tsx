@@ -8,13 +8,27 @@ import { useRouter } from 'next/navigation'
 
 export default function Buttonsigninsignup() {
 
-    const tokenLocalStorage = localStorage.getItem('token');
+    const [tokenLocalStorage, setTokenLocalStorage] = useState<string | null>(null);
     const router = useRouter();
     React.useEffect(() => {
-        if (!tokenLocalStorage) {
-            router.push('/signin')
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('token');
+            setTokenLocalStorage(token);
+            if (!token) {
+                router.push('/signin');
+            }
         }
-    }, [])
+    }, [router])
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('token');
+            setTokenLocalStorage(token);
+            if (!token) {
+                router.push('/signin');
+            }
+        }
+    }, [router]);
 
     const removeTokenLocalStorage = () => {
         try {
@@ -23,7 +37,7 @@ export default function Buttonsigninsignup() {
                 router.push('/signin');
             }
         } catch (error) {
-            
+            console.error('Failed to remove token from localStorage', error);
         }
     }
 
