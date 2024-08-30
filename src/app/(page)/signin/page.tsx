@@ -58,8 +58,15 @@ export default function FormSignin() {
     }
 
     if(Token){
-        window.localStorage.setItem('token', Token);
-        window.location.href = '/';
+        try {
+            if(typeof window !== "undefined"){
+                localStorage.setItem('token', Token);
+                router.push('/users');
+
+            }
+        } catch (error) {
+            console.error('Error while setting token in localStorage:', error);
+        }
     }
 
 

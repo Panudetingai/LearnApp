@@ -17,8 +17,14 @@ export default function Buttonsigninsignup() {
     }, [])
 
     const removeTokenLocalStorage = () => {
-        window.localStorage.removeItem('token');
-        window.location.href = "/signin";
+        try {
+            if(typeof window !== 'undefined') {
+                localStorage.removeItem('token');
+                router.push('/signin');
+            }
+        } catch (error) {
+            
+        }
     }
 
     return (
