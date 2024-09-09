@@ -48,9 +48,12 @@ export default function ProfileForm() {
                 }),
             });
 
-            if(res.status === 200) {
-                router.push('/users');
+            if(typeof window !== undefined){
+                if(res.ok){
+                    router.push("/users")
+                }
             }
+
         } catch (error) {
             console.error(error);
         }
