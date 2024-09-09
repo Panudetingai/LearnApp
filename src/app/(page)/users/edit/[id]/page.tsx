@@ -43,7 +43,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     React.useEffect(() => {
         const fetchUserold = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${params.id}`, {
+                const res = await fetch(`https://backend-seven75.vercel.app/api/user/${params.id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     async function onSubmit(data: Input) {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${params.id}`, {
+            const res = await fetch(`https://backend-seven75.vercel.app/api/user/${params.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

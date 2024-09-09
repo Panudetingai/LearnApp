@@ -35,7 +35,7 @@ export default function ProfileForm() {
 
     async function onSubmit(data: Input) {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
+            const res = await fetch(`https://backend-seven75.vercel.app/api/user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

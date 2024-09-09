@@ -38,7 +38,7 @@ export default function FormSignin() {
 
     async function onSubmit(data: Input) {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/login`, {
+            const res = await fetch(`https://backend-seven75.vercel.app/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

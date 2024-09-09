@@ -24,7 +24,7 @@ export default function TableDemo() {
     React.useEffect(() => {
         try {
             const fetchUser = async () => {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
+                const res = await fetch(`https://backend-seven75.vercel.app/api/user`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function TableDemo() {
     const handsubmit = (id: number) => {
         try {
             const deleteuser = async () => {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${id}`, {
+                const res = await fetch(`https://backend-seven75.vercel.app/api/user/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
